@@ -14,7 +14,8 @@ class Aplication:
             case 'add_round':
                 self.connect.post_round_score()
             case 'shuffle':
-                print("Zawodnicy wymieszani ",self.connect.get_players_with_points())
+                dictionary=self.connect.get_players_with_points()
+                
 
 if __name__=='__main__':
     with sqlite3.connect("chess//test_database.db")as connect:
