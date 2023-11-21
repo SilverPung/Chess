@@ -30,17 +30,12 @@ class Parser:
         self.add_group.add_argument(
             '--name',
             type=str,
-            required='--add-player' in sys.argv or '--add-round' in sys.argv
+            required='--add-player' in sys.argv
         )
         self.add_group.add_argument(
             '--surname',
             type=str,
-            required='--add-player' in sys.argv or '--add-round' in sys.argv
-        )
-        self.add_group.add_argument(
-            '--points',
-            type=float,
-            required= '--add-round' in sys.argv
+            required='--add-player' in sys.argv
         )
     def parse_args(self):
         return self.parser.parse_args()   

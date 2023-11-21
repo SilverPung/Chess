@@ -12,7 +12,7 @@ class Aplication:
             case 'add_player':
                 self.connect.add_player(self.arguments.name,self.arguments.surname)
             case 'add_round':
-                print("Wynik dodany")
+                self.connect.post_round_score()
             case 'shuffle':
                 print("Zawodnicy wymieszani ",self.connect.get_players_with_points())
 

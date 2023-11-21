@@ -65,6 +65,7 @@ class Connection():
                 except TypeError:
                     pass
             players.update({id[0]:total})
+        return players
     def post_round_score(self):
         rounds=self.get_number_of_rounds()
         if rounds>1:
@@ -72,12 +73,10 @@ class Connection():
             rounds+=1
         self.cursor.execute("SELECT player_id FROM rounds")
         players=self.cursor.fetchall()
-        print(players)
+        #print(players)
         for n in range(0,len(players)):
             self.cursor.execute(f"UPDATE rounds SET round_{rounds-1} = 1 WHERE player_id={players[n][0]};")
-            
         
-        return players
 if __name__=='__main__':
     with sqlite3.connect("chess//test_database.db")as connect:
         conn=Connection(connect)
