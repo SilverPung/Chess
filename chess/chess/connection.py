@@ -7,7 +7,8 @@ class Connection():
         self.connection=connect
         self.cursor=connect.cursor()
         self.create_players()
-        self.create_rounds()    
+        self.create_rounds()   
+        self.create_duels() 
     def create_players(self):
         sql="""CREATE TABLE IF NOT EXISTS players(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,9 +16,14 @@ class Connection():
                 surname TEXT)"""
         self.cursor.execute(sql)
     def create_rounds(self):
-        sql="""CREATE TABLE IF NOT EXISTS rounds(player_id INTEGER PRIMARY KEY,
+        sql="""CREATE TABLE IF NOT EXISTS rounds(
+                player_id INTEGER PRIMARY KEY,
                 round_1 FLOAT,
                 FOREIGN KEY (player_id) REFERENCES players(id))"""
+        self.cursor.execute(sql)
+    def create_duels(self):
+        sql="""CREATE TABLE IF NOT EXISTS duels(player_id INTEGER,
+        opponent_id INTEGER)"""
         self.cursor.execute(sql)
     def add_another_round(self):
         self.cursor.execute(f"PRAGMA table_info(rounds);")
@@ -47,6 +53,9 @@ class Connection():
             self.add_score(id,score,round)
         except TypeError:
             print("404 brak danych")
+    def add_duels(self,duels):
+        for duel in duels:
+            self.cursor.execute("INSERT INTO duels VALUES(?,?)",(duel[0],duel[1]))
     def get_number_of_rounds(self):
         self.cursor.execute(f"PRAGMA table_info(rounds);")
         columns = [column[1] for column in self.cursor.fetchall()]

@@ -35,8 +35,3 @@ class Shuffle:
                 return opponent
 
 # Example usage:
-players = {4: 7, 3: 2.0, 1: 5.0, 2: 5.0}
-shuf = Shuffle(players)
-
-pairings = shuf.generate_pairings()
-print(pairings)

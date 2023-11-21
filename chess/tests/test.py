@@ -1,28 +1,24 @@
-class Aplication:
-    def __init__(self,actions) -> None:
-        #parser=Parser()
-        #self.arguments  = parser.parse_args()
-        self.actions=actions
-    def main(self):
-        match self.arguments.action:
-            case 'add_expense':
-                self.add_expense(self.arguments.name,self.arguments.category,self.arguments.date,self.arguments.value)
-            case 'add_income':
-                self.add_income(self.arguments.name,self.arguments.category,self.arguments.date,self.arguments.value)
-            case 'delete':
-                self.delete(self.arguments.id)
-            case 'list':
-                self.list()     
-            case 'stats':
-                self.stats()
-    def add_expense(self,name,category,date,value):
-        self.actions.add_item(name, category, date, -(int(value)))
-    def add_income(self,name,category,date,value):
-        self.actions.add_item(name, category, date, value)
-    def delete(self,id):
-        self.actions.delete_item(id)
-    def list(self):
-        for n in self.actions.list_items():
-            print(n)
-    def stats(self):
-        print(self.actions.stats()[0])
+import csv
+fieldnames=['Name','Time_to_100','Speed_record']
+def input_data():
+    data=[]
+    with open('cars.csv',mode='r',newline='') as output_file:
+        reader=csv.DictReader(output_file,fieldnames=fieldnames,delimiter=',')
+        for row in reader:
+            data.append(row)        
+    with open('cars.csv',mode='w',newline='') as input_file:
+
+        writer=csv.DictWriter(input_file,fieldnames=fieldnames)
+        data.append({'Name':input(),'Time_to_100':input(),'Speed_record':input()})
+        for given in data:
+            writer.writerow(given)
+
+def print_data():
+    with open('cars.csv',mode='r',newline='') as output_file:
+        reader=csv.DictReader(output_file,fieldnames=fieldnames,delimiter=',')
+        for row in reader:
+            print(row)  
+
+
+if __name__=='__main__':
+    print_data()
