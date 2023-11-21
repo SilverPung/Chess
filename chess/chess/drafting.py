@@ -1,0 +1,1 @@
+#file to draft players from database together 
