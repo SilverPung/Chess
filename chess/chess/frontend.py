@@ -169,7 +169,7 @@ if __name__ == '__main__':
     selected_value = tk.StringVar()
 
     combobox = ttk.Combobox(window, textvariable=selected_value)
-    combobox['values'] = ("Dodaj zawodnika", "Losuj", "Dodaj wyniki")
+    combobox['values'] = ("Dodaj zawodnika", "Losuj")
     combobox.grid(row=0, column=0, pady=10, padx=10)
 
     selection_label = tk.Label(window, textvariable=selected_value)
@@ -183,8 +183,6 @@ if __name__ == '__main__':
                 apc.add_player()
             case 'Losuj':
                 apc.shuffle()
-            case 'Dodaj wyniki':
-                apc.add_scores()
 
     combobox.bind("<<ComboboxSelected>>", on_select)
 
