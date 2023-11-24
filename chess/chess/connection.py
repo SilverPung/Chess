@@ -75,19 +75,31 @@ class Connection():
                     pass
             players.update({id[0]:total})
         return players
-    def post_round_score(self):
+    def get_opponents(self,id):
+        opponents=[]
+        self.cursor.execute(f'SELECT opponent_id FROM duels WHERE player_id={id}')
+        for item in self.cursor.fetchall():
+            opponents.append(item[0])
+        self.cursor.execute(f'SELECT player_id FROM duels WHERE opponent_id={id}')
+        for item in self.cursor.fetchall():
+            opponents.append(item[0])
+        return set(opponents)
+    def print_players(self):
+        self.cursor.execute(f'SELECT * FROM players')
+        print(self.cursor.fetchall())
+    def post_round_score(self,players:list):
         rounds=self.get_number_of_rounds()
         if rounds>1:
             self.add_another_round()
             rounds+=1
-        self.cursor.execute("SELECT player_id FROM rounds")
-        players=self.cursor.fetchall()
+
         #print(players)
-        for n in range(0,len(players)):
-            self.cursor.execute(f"UPDATE rounds SET round_{rounds-1} = 1 WHERE player_id={players[n][0]};")
+        for player in players:
+            if player['id']!='':
+                self.cursor.execute(f"UPDATE rounds SET round_{rounds-1} = {player['score']} WHERE player_id={player['id']};")
         
 if __name__=='__main__':
     with sqlite3.connect("chess//test_database.db")as connect:
         conn=Connection(connect)
-        conn.post_round_score()
+        #print(conn.print_players())
     

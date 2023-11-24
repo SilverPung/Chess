@@ -5,22 +5,28 @@ import sqlite3
 import csv
 class Aplication:
     def __init__(self,connect) -> None:
+        self.connect_to_base=connect
         self.connect=Connection(connect)
         parser=Parser()
         self.arguments  = parser.parse_args()
-        #self.main()
+        self.main()
     def main(self):
         match self.arguments.action:
             case 'add_player':
+                #adding palyer to the table
                 self.connect.add_player(self.arguments.name,self.arguments.surname)
             case 'add_round':
-                self.connect.post_round_score()
+                #adding round with points to the table
+                self.print_data()
             case 'shuffle':
+                #getting duels
                 dictionary=self.connect.get_players_with_points()
-                shuffle=Shuffle(dictionary)
+                shuffle=Shuffle(dictionary,self.connect_to_base)
                 players=shuffle.generate_pairings()
-                print(players)
+                #print(players)
                 self.connect.add_duels(players)
+            case 'print_players':
+                self.connect.print_players()
     def print_data(self):
         fieldnames=['id','score']
         self.scores=[]
@@ -28,14 +34,9 @@ class Aplication:
             reader=csv.DictReader(output_file,fieldnames=fieldnames,delimiter=',')
             for row in reader:
                   self.scores.append(row)
-                  print(row)
-                
+            self.connect.post_round_score(self.scores)
 
 if __name__=='__main__':
-    with sqlite3.connect("chess//test_database.db")as connect:
+    with sqlite3.connect("chess//t_database.db")as connect:
         app=Aplication(connect)
-        app.print_data()
-        #conn.add_another_round()
-        #conn.add_player("Amadeusz","Krab")
-        #conn.add_score_by_name("Amadeusz","Krab",1,2)
     

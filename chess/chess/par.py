@@ -26,6 +26,13 @@ class Parser:
             const='shuffle',
             help='losujemy zawodników'
         )
+        self.action_group.add_argument(
+            '--print-players',
+            dest='action',
+            action='store_const',
+            const='print_players',
+            help='Dodawanie zawodnika zawodów'
+        )
         self.add_group = self.parser.add_argument_group('Add Arguments')
         self.add_group.add_argument(
             '--name',
