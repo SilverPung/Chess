@@ -138,7 +138,7 @@ def to_sys(command):
         print("An error occurred:", str(e))
 
 def output_label_in_new_window(result):
-    headers = ["Id", "Imie", "Nazwisko"]
+    headers = ["Id", "Imie", "Nazwisko","Wynik"]
     result = ast.literal_eval(result)
 
     global new_window  # Keep a reference to the new window

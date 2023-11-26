@@ -63,7 +63,7 @@ class Connection():
         return len(columns)
     def get_players_with_points(self):
         number_of_rounds=self.get_number_of_rounds()
-        self.cursor.execute("SELECT players.id  FROM players")
+        self.cursor.execute("SELECT id  FROM players")
         players={}
         for id in self.cursor.fetchall():
             total=0
@@ -85,8 +85,19 @@ class Connection():
             opponents.append(item[0])
         return set(opponents)
     def print_players(self):
-        self.cursor.execute(f'SELECT * FROM players')
-        print(self.cursor.fetchall())
+        number_of_rounds=self.get_number_of_rounds()
+        self.cursor.execute("SELECT *  FROM players")
+        players=[]
+        for id, name ,surname in self.cursor.fetchall():
+            total=0
+            for n in range(1,number_of_rounds):
+                self.cursor.execute(f"SELECT round_{n} FROM rounds WHERE player_id=?",(id,))
+                try:
+                    total+=self.cursor.fetchone()[0]
+                except TypeError:
+                    pass
+            players.append([id,name,surname,total])
+        print(players)
     def post_round_score(self,players:list):
         rounds=self.get_number_of_rounds()
         if rounds>1:
@@ -101,5 +112,5 @@ class Connection():
 if __name__=='__main__':
     with sqlite3.connect("chess//test_database.db")as connect:
         conn=Connection(connect)
-        #print(conn.print_players())
+        print(conn.print_players())
     

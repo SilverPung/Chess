@@ -37,6 +37,6 @@ class Aplication:
             self.connect.post_round_score(self.scores)
 
 if __name__=='__main__':
-    with sqlite3.connect("chess//t_database.db")as connect:
+    with sqlite3.connect("chess//database.db")as connect:
         app=Aplication(connect)
     

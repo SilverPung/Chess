@@ -6,7 +6,8 @@ authors = ["SilverPung <kristofer.pawel@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.13"
+pyinstaller = "^6.2.0"
 
 
 [build-system]
