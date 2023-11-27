@@ -99,7 +99,7 @@ def save(result):
 
     input_window = tk.Toplevel()
     input_window.title("Table Example")
-
+    input_window.geometry("+1100+50")
     table_input=TableInput(input_window,len(result),2)
     submit_button = tk.Button(input_window, text="Wpisz dane", command=lambda: on_submit(table_input,result))
     submit_button.grid(row=table_input.rows + 1, columnspan=table_input.columns + 1, pady=10)
@@ -151,7 +151,7 @@ def output_label_in_new_window(result):
     new_window.title("Table Example")
 
     # Set the geometry to position the window slightly to the left
-    new_window.geometry("-1000-100")  # Adjust the values as needed
+    new_window.geometry("+500+50")  # Adjust the values as needed
 
     for col, header in enumerate(headers):
         header_label = tk.Label(new_window, text=header, relief=tk.RIDGE, width=15)
