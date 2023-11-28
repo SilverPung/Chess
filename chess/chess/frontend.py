@@ -80,7 +80,7 @@ class Commands:
 
         window.mainloop()
 
-    def add_scores(self,):
+    def add_scores(self):
         pass
     
     def shuffle(self):
@@ -181,7 +181,7 @@ def to_sys(command):
         print("An error occurred:", str(e))
 
 def output_label_in_new_window(result):
-    headers = ["Id", "Imie", "Nazwisko","Wynik"]
+    headers = ["Id", "Imie", "Nazwisko", "Wynik"]
     result = ast.literal_eval(result)
 
     global new_window  # Keep a reference to the new window
@@ -194,16 +194,28 @@ def output_label_in_new_window(result):
     new_window.title("Table Example")
 
     # Set the geometry to position the window slightly to the left
-    new_window.geometry("+500+50")  # Adjust the values as needed
+    new_window.geometry("500x250+500+50")  # Adjust the values as needed
 
+    # Create a treeview widget with vertical scrollbar
+    tree = ttk.Treeview(new_window, columns=headers, show="headings")
+    tree.grid(row=0, column=0, sticky="nsew")
+
+    scrollbar = ttk.Scrollbar(new_window, orient="vertical", command=tree.yview)
+    scrollbar.grid(row=0, column=1, sticky="ns")
+
+    tree.configure(yscrollcommand=scrollbar.set)
+
+    # Set column headings
     for col, header in enumerate(headers):
-        header_label = tk.Label(new_window, text=header, relief=tk.RIDGE, width=15)
-        header_label.grid(row=0, column=col, pady=5, padx=5)
+        tree.heading(col, text=header)
+        tree.column(col, width=100)  # Adjust width as needed
 
-    for row, rowData in enumerate(result, start=1):
-        for col, value in enumerate(rowData):
-            cell_label = tk.Label(new_window, text=value, relief=tk.RIDGE, width=15)
-            cell_label.grid(row=row, column=col, pady=5, padx=5)
+    # Insert data into the treeview
+    for rowData in result:
+        tree.insert("", "end", values=rowData)
+
+    # Allow resizing of columns
+    new_window.grid_columnconfigure(0, weight=1)
 
 if __name__ == '__main__':
     window = tk.Tk()
