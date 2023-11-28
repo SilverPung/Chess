@@ -1,3 +1,8 @@
+"""
+    The code is a Python application that connects to a SQLite database, parses command line arguments,
+    and performs various actions such as adding players, adding rounds with scores, shuffling players
+    for duels, and printing player information.
+    """
 from connection import Connection
 from par import Parser
 from drafting import Shuffle

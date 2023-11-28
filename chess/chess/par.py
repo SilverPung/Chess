@@ -1,3 +1,5 @@
+# The Parser class is used to create a command-line argument parser with options for adding players,
+# adding rounds, shuffling players, and printing players.
 import argparse
 import sys
 

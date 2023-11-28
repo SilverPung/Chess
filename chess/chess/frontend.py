@@ -1,3 +1,11 @@
+"""
+    The code is a Python GUI application that allows users to add players and shuffle them for a chess
+    tournament.
+    
+    :param command: The `command` parameter is a string that represents the selected value from the
+    combobox. It can have two possible values: "Dodaj zawodnika" (which means "Add player" in Polish) or
+    "Losuj" (which means "Shuffle" in Polish)
+    """
 import tkinter as tk
 from tkinter import ttk
 import subprocess
