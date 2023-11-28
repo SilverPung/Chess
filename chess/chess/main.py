@@ -32,6 +32,8 @@ class Aplication:
                 self.connect.add_duels(players)
             case 'print_players':
                 self.connect.print_players()
+            case 'delete':
+                self.connect.delete_player(self.arguments.id)
     def print_data(self):
         fieldnames=['id','score']
         self.scores=[]
