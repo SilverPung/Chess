@@ -17,7 +17,38 @@ input_window=None
 class Commands:
     def __init__(self) -> None:
         pass
-    
+    def delete_player(self):
+        global window
+        if window:
+            window.destroy()
+
+        new_window=None
+        input_window=None
+        window = tk.Tk()
+        window.title("Get Information Example")
+
+        text = tk.Label(window, text='Podaj Id')
+        text.grid(row=0, column=0, pady=5, padx=5)
+
+        id_entry = tk.Entry(window)
+        id_entry.grid(row=0, column=1, pady=5, padx=5)
+
+        get_button = tk.Button(window, text="Usuń Zawodnika", command=lambda: self.delete_it(id_entry))
+        get_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+        
+
+        add_player=tk.Button(window,text='Dodaj Zawodnika',command=lambda: self.add_player())
+        add_player.grid(row=3,column=0,columnspan=2,pady=10)
+        
+        window.mainloop()
+
+    def delete_it(self,id):
+        command = f'python chess\\chess\\main.py --delete --id {id.get()}'
+        to_sys(command)
+        id.delete(0, tk.END)
+        command = 'python chess\\chess\\main.py --print-players'
+        from_sys(command)
     def add_player(self):
         global window
         window.destroy()
@@ -42,6 +73,10 @@ class Commands:
 
         g_button = tk.Button(window, text="Wylosuj", command=lambda: self.shuffle())
         g_button.grid(row=3, column=0, columnspan=2, pady=10)
+        
+        delete_button = tk.Button(window, text="Usuń Zawodnika", command=lambda: self.delete_player()) 
+        delete_button.grid(row=4, column=0, columnspan=2, pady=10)
+
 
         window.mainloop()
 
@@ -177,7 +212,7 @@ if __name__ == '__main__':
     selected_value = tk.StringVar()
 
     combobox = ttk.Combobox(window, textvariable=selected_value)
-    combobox['values'] = ("Dodaj zawodnika", "Losuj")
+    combobox['values'] = ("Dodaj zawodnika", "Losuj","Usuń zawodnika")
     combobox.grid(row=0, column=0, pady=10, padx=10)
 
     selection_label = tk.Label(window, textvariable=selected_value)
@@ -191,6 +226,8 @@ if __name__ == '__main__':
                 apc.add_player()
             case 'Losuj':
                 apc.shuffle()
+            case 'Usuń zawodnika':
+                apc.delete_player()
 
     combobox.bind("<<ComboboxSelected>>", on_select)
 

@@ -35,6 +35,13 @@ class Parser:
             const='print_players',
             help='Dodawanie zawodnika zawodów'
         )
+        self.action_group.add_argument(
+            '--delete',
+            dest='action',
+            action='store_const',
+            const='delete',
+            help='Usuwanie zawodnika'
+        )
         self.add_group = self.parser.add_argument_group('Add Arguments')
         self.add_group.add_argument(
             '--name',
@@ -45,6 +52,11 @@ class Parser:
             '--surname',
             type=str,
             required='--add-player' in sys.argv
+        )
+        self.add_group.add_argument(
+            '--id',
+            type=int,
+            required='--delete' in sys.argv
         )
     def parse_args(self):
         return self.parser.parse_args()   
