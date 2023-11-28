@@ -113,6 +113,9 @@ class Connection():
         self.cursor.execute(f"DELETE FROM rounds WHERE player_id={id}")
         self.cursor.execute(f"DELETE FROM duels WHERE player_id={id} OR opponent_id={id}")
         self.connection.commit()    
+    def delete_duels(self):
+        self.cursor.execute("DELETE FROM duels")
+        self.connection.commit()
 if __name__=='__main__':
     with sqlite3.connect("chess//test_database.db")as connect:
         conn=Connection(connect)

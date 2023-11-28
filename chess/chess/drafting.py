@@ -20,7 +20,8 @@ class Shuffle:
                 player1=self.sorted_players[i]
                 player2=self.find_opponent(player1,self.sorted_players,self.connect.get_opponents(player1['id']),draftings)
                 if player2==None:
-                    player2=self.find_opponent(player1,self.sorted_players,temp,draftings)
+                    self.connect.delete_duels()
+                    player2=self.find_opponent(player1,self.sorted_players,self.connect.get_opponents(player1['id']),draftings)
                     temp.append(player2)
                     #print(draftings)
                 pairings.append([player1['id'],player2])
