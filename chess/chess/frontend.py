@@ -5,7 +5,8 @@
     :param command: The `command` parameter is a string that represents the selected value from the
     combobox. It can have two possible values: "Dodaj zawodnika" (which means "Add player" in Polish) or
     "Losuj" (which means "Shuffle" in Polish)
-    """
+"""
+
 import tkinter as tk
 from tkinter import ttk
 import subprocess
@@ -14,9 +15,12 @@ from table import TableInput
 import csv
 new_window=None
 input_window=None
+
+
 class Commands:
     def __init__(self) -> None:
         pass
+
     def delete_player(self):
         global window
         if window:
@@ -49,6 +53,7 @@ class Commands:
         id.delete(0, tk.END)
         command = 'python chess\\chess\\main.py --print-players'
         from_sys(command)
+
     def add_player(self):
         global window
         window.destroy()
@@ -111,9 +116,11 @@ class Commands:
 def from_sys(command):
     result = subprocess.check_output(command, text=True)
     output_label_in_new_window(result)
+
 def from_sys_shuffle(command):
     result = subprocess.check_output(command, text=True)
     output_label(result)
+
 def output_label(result):
     apc=Commands()
     headers = ["Id", "ID_przeciwnika"]
@@ -132,6 +139,7 @@ def output_label(result):
     submit_button.grid(pady=10,padx=15)
     submit_button = tk.Button(window, text="Losuj", command=lambda: apc.shuffle())
     submit_button.grid(pady=10)
+
 def save(result):
 
     global input_window  # Keep a reference to the new window
@@ -146,6 +154,7 @@ def save(result):
     table_input=TableInput(input_window,len(result),2)
     submit_button = tk.Button(input_window, text="Wpisz dane", command=lambda: on_submit(table_input,result))
     submit_button.grid(row=table_input.rows + 1, columnspan=table_input.columns + 1, pady=10)
+
 def on_submit(table_input,result):
         global input_window
         # Get the values from the table and print them

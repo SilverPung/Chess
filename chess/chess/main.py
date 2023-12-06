@@ -15,6 +15,7 @@ class Aplication:
         parser=Parser()
         self.arguments  = parser.parse_args()
         self.main()
+
     def main(self):
         match self.arguments.action:
             case 'add_player':
@@ -34,6 +35,7 @@ class Aplication:
                 self.connect.print_players()
             case 'delete':
                 self.connect.delete_player(self.arguments.id)
+                
     def print_data(self):
         fieldnames=['id','score']
         self.scores=[]
